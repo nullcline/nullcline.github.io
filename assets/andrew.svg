@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1001" height="274" viewBox="0 0 1001 274">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        font-size: 200px;
+        fill: #fff;
+      }
+
+      .cls-1 {
+        font-family: "STRESS MOOD DEMO";
+      }
+
+      .cls-2 {
+        font-family: OpenSymbol;
+      }
+    </style>
+  </defs>
+  <text id="Andrew" class="cls-1" x="9.956" y="262.998">Andrew</text>
+  <text id="_" data-name="†" class="cls-2" transform="translate(135.687 98.766) scale(0.656)">†</text>
+</svg>

@@ -1,0 +1,167 @@
+body {
+    font-family: Monospace;
+    background-color: #fff;
+    margin: 0px;
+    overflow: hidden;
+
+    background: rgba(8, 8, 8, 1.0);
+    /* background-image: radial-gradient(rgba(253, 250, 250, 0.1) 1px, transparent 0);
+    background-size: 20px 20px;
+    background-position: -19px -19px; */
+}
+
+
+#canvas {
+    background-color: #000;
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    margin: 100px;
+    padding: 0px;
+    position: static; /* fixed or static */
+    top: 100px;
+    left: 100px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 30px 10%;
+    background-color: rgba(8, 8, 8, 0.0);
+  }
+
+  #landing_page_header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 30px 10%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.0);
+  }
+
+  .logo {
+    margin-right: auto;
+  }
+
+  .nav__links {
+    list-style: none;
+    display: flex;
+  }
+
+  .nav__links a,
+  .cta,
+  .overlay__content a {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    color: #edf0f1;
+    text-decoration: none;
+  }
+
+  .nav__links li {
+    padding: 0px 20px;
+  }
+
+  .nav__links li a {
+    transition: all 0.3s ease 0s;
+  }
+
+  .nav__links li a:hover {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.5)
+  }
+
+  .cta {
+    margin-left: 20px;
+    padding: 9px 25px;
+    background-color: rgb(43, 47, 58);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+  }
+
+  .cta:hover {
+    background-color: rgba(43, 47, 58);
+  }
+
+  /* Mobile Nav */
+
+  .menu {
+    display: none;
+  }
+
+  .overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    background-color: #24252a;
+    overflow-x: hidden;
+    transition: all 0.5s ease 0s;
+  }
+
+  .overlay--active {
+    width: 100%;
+  }
+
+  .overlay__content {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .overlay a {
+    padding: 15px;
+    font-size: 36px;
+    display: block;
+    transition: all 0.3s ease 0s;
+  }
+
+  .overlay a:hover,
+  .overlay a:focus {
+    color: rgba(255, 255, 255, 1);
+    box-shadow: 0 5px 15px rgba(145, 92, 182, .4)
+  }
+  .overlay .close {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+    color: #edf0f1;
+    cursor: pointer;
+  }
+
+  @media screen and (max-height: 450px) {
+    .overlay a {
+      font-size: 20px;
+    }
+    .overlay .close {
+      font-size: 40px;
+      top: 15px;
+      right: 35px;
+    }
+  }
+
+  @media only screen and (max-width: 800px) {
+    .nav__links,
+    .cta {
+      display: none;
+    }
+    .menu {
+      display: initial;
+    }
+  }
