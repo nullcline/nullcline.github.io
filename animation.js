@@ -17,11 +17,16 @@ scene.add( light );
 
 var group = new THREE.Group();
 
-// points generated from lorenz function
-var arrayCurve = lorenz();
+// starting point for lorentz attractor animation
+var a_0 = 0.9+Math.random()*3;
+var b_0 = 3.4+Math.random()*3;
+var f_0 = 9.9+Math.random()*3;
+var g_0 = 1+Math.random();
+
+var arrayCurve = lorenz(a_0, b_0, f_0, g_0);
 var curve = new THREE.CatmullRomCurve3(arrayCurve);
 var geometry = new THREE.Geometry();
-geometry.vertices = curve.getPoints(100000);
+geometry.vertices = curve.getPoints(111111);
 
 // Generating a cloud of point
 var pcMat = new THREE.PointsMaterial();
@@ -41,17 +46,20 @@ var step = 0;
 var render = function () {
 
     renderer.render( scene, camera );
-    requestAnimationFrame( render );
+    requestAnimationFrame( function() {
+        render()
+    });
 
     //Varying the points on each frame
     step+=0.01;
     var geometry = pc.geometry;
-    var a = 0.9+Math.random()*6;
-    var b = 3.4+Math.random()*7;
-    var f = 9.9+Math.random()*8;
-    var g = 1+Math.random();
+    var a = a_0+Math.random()*6;
+    var b = b_0+Math.random()*7;
+    var f = f_0+Math.random()*8;
+    var g = g_0+Math.random();
     var t = 0.001;
 
+    console.log
 
     geometry.vertices.forEach(function(v){
         v.x = v.x - t*a*v.x +t*v.y*v.y -t*v.z*v.z + t*a*f;
@@ -62,9 +70,7 @@ var render = function () {
 
     group.rotation.x += 0.01;
     group.rotation.y += 0.02;
-    group.rotation.z += 0.01;
-
-
+    group.rotation.z -= 0.01;
 };
 
 window.addEventListener( 'resize', function () {
@@ -74,24 +80,19 @@ window.addEventListener( 'resize', function () {
 
 }, false );
 
-render();
+render(a_0, b_0, f_0, g_0);
 
-function lorenz(){
+function lorenz(a, b, f, g){
 
     var arrayCurve=[];
 
     var x = 0.01, y = 0.01, z = 0.01;
-    var a = 0.9;
-    var b = 3.4;
-    var f = 9.9;
-    var g = 1;
     var t = 0.001;
     for (var i=0;i<100000;i++){
-
-    x = x - t*a*x +t*y*y -t*z*z + t*a*f;
-    y = y - t*y + t*x*y - t*b*x*z + t*g;
-    z = z - t*z + t*b*x*y + t*x*z;
-    arrayCurve.push(new THREE.Vector3(x, y, z).multiplyScalar(1));
+        x = x - t*a*x +t*y*y -t*z*z + t*a*f;
+        y = y - t*y + t*x*y - t*b*x*z + t*g;
+        z = z - t*z + t*b*x*y + t*x*z;
+        arrayCurve.push(new THREE.Vector3(x, y, z).multiplyScalar(1));
     }
     return arrayCurve;
 }
