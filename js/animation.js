@@ -1,14 +1,15 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-let camera, controls, scene, renderer, pc, group;
+let camera, controls, scene, renderer, pc, group, mouse, raycaster;
 
-var a_0 = 0.9+Math.random()*3;
-var b_0 = 3.4+Math.random()*3;
-var f_0 = 9.9+Math.random()*3;
-var g_0 = 1+Math.random();
+var a_0 = 1.062477352437103;
+var b_0 = 8.038291607940321;
+var f_0 = 14.507204661264549;
+var g_0 = 1.8347793740599485;
 
 init();
+timeskip(a_0, b_0, f_0, g_0);
 render(a_0, b_0, f_0, g_0);
 
 function init() {
@@ -24,14 +25,13 @@ function init() {
 
     group = new THREE.Group();
 
-    // adding controls for camera
-    // controls = new OrbitControls( camera, renderer.domElement );
-    // controls.enableDamping = true;
-    // controls.dampingFactor = 0.05;
-    // controls.screenSpacePanning = false;
-    // controls.minDistance = 100;
-    // controls.maxDistance = 500;
-    // controls.maxPolarAngle = Math.PI / 2;
+    controls = new OrbitControls( camera, renderer.domElement );
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.25;
+    controls.screenSpacePanning = false;
+    controls.minDistance = 0.1;
+    controls.maxDistance = 50;
+    controls.maxPolarAngle = Math.PI / 2;
 
     var arrayCurve = lorenz(a_0, b_0, f_0, g_0);
     var curve = new THREE.CatmullRomCurve3(arrayCurve);
@@ -50,13 +50,37 @@ function init() {
 
     group.add(pc);
     scene.add( group );
+
+    mouse = new THREE.Vector2();
+    raycaster = new THREE.Raycaster();
+
+    window.addEventListener( 'mousemove', onMouseMove, false );
+}
+
+function onMouseMove( event ) {
+
+    // calculate mouse position in normalized device coordinates
+    // (-1 to +1) for both components
+    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 }
 
 function render(a_0, b_0, f_0, g_0) {
 
     requestAnimationFrame( function() { render(a_0, b_0, f_0, g_0) } );
-    // controls.update();
+    controls.update();
     renderer.render( scene, camera );
+
+    raycaster.setFromCamera( mouse, camera );
+    console.log(mouse);
+    // calculate objects intersecting the picking ray
+    var intersects = raycaster.intersectObject( pc );
+    for ( var i = 0; i < intersects.length; i++ ) {
+        intersects[i].point.sub( mouse ).multiplyScalar(5);
+        // pc.geometry.colors[intersects[i].index].set(0xffffff);
+    }
+
+    pc.geometry.colorsNeedUpdate = true;
 
     // randomly varying the initial parameters of the lorenz attractor
     var geometry = pc.geometry;
@@ -64,7 +88,7 @@ function render(a_0, b_0, f_0, g_0) {
     var b = b_0+Math.random()*7;
     var f = f_0+Math.random()*8;
     var g = g_0+Math.random();
-    var t = 0.001;
+    var t = 0.0008;
 
     //todo: show the parameters live?
 
@@ -102,4 +126,28 @@ function lorenz(a, b, f, g){
         arrayCurve.push(new THREE.Vector3(x, y, z).multiplyScalar(1));
     }
     return arrayCurve;
+}
+
+// progress through the animation a bit to avoid ugly lines
+function timeskip(){
+
+    var geometry = pc.geometry;
+    var a = 3.664669162451547;
+    var b = 5.508898472476083;
+    var f = 12.693008234922399;
+    var g = 2.8005228465422123;
+    var t = 0.005;
+
+    for (var i=0;i<100;i++) {
+        geometry.vertices.forEach(function(v){
+            v.x = v.x - t*a*v.x +t*v.y*v.y -t*v.z*v.z + t*a*f;
+            v.y = v.y - t*v.y + t*v.x*v.y - t*b*v.x*v.z + t*g;
+            v.z = v.z - t*v.z + t*b*v.x*v.y + t*v.x*v.z;
+        })
+
+        geometry.verticesNeedUpdate = true;
+        group.rotation.x += 0.01;
+        group.rotation.y += 0.02;
+        group.rotation.z -= 0.01;
+    }
 }
