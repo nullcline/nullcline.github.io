@@ -177,31 +177,45 @@ html {
   overflow: auto;
   scroll-snap-align: start;
   position: absolute;
-  width: 100vw;
+  width: 50vw;
   top: 110vh;
-  padding: 30px 10%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+
   color: white;
   background-color: rgba(0, 0, 0, 0.0);
 
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 25px;
-
-  font-family: "Montserrat", sans-serif;
-}
-
-.about-left {
   display: flex;
   flex-direction: column;
-  justify-content: left;
+  justify-content: center;
   vertical-align: text-top;
   text-align: left;
   font-size: large;
+  font-family: "Montserrat", sans-serif;
 }
 
-.about-right {
+.lore {
+  overflow: auto;
+  scroll-snap-align: start;
+  position: absolute;
+  width: 50vw;
+  top: 160vh;
+  left: 50%;
+  transform: translate(-50%, 0%);
+
+  color: white;
+  background-color: rgba(0, 0, 0, 0.0);
+
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  vertical-align: text-top;
+  text-align: left;
+  font-size: large;
+  font-family: "Montserrat", sans-serif;
 }
+
+
 
 #transition_bottom {
   position: absolute;
@@ -266,6 +280,8 @@ html {
   padding: 10px 32px;
   text-align: center;
   text-decoration: none;
+  width: 20%;
+  transform: translate(200%, 0%);
   display: inline-block;
   font-size: 16px;
   margin: 4px 2px;

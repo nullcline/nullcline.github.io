@@ -32,6 +32,7 @@ function init() {
     controls.minDistance = 0.1;
     controls.maxDistance = 50;
     controls.maxPolarAngle = Math.PI / 2;
+    controls.enableZoom = false;
 
     var arrayCurve = lorenz(a_0, b_0, f_0, g_0);
     var curve = new THREE.CatmullRomCurve3(arrayCurve);
