@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 let camera, controls, scene, renderer, pc, group, mouse, raycaster;
-
+// prettiest initial conditions
 var a_0 = 1.062477352437103;
 var b_0 = 8.038291607940321;
 var f_0 = 14.507204661264549;
@@ -59,9 +59,6 @@ function init() {
 }
 
 function onMouseMove( event ) {
-
-    // calculate mouse position in normalized device coordinates
-    // (-1 to +1) for both components
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
     mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 }

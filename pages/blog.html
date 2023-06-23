@@ -4,41 +4,36 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>(a^🗡️)</title>
-        <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="../css/styles.css">
+        <link rel="stylesheet" href="/css/styles.css">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+        <script type="importmap">
+        {
+            "imports": {
+            "three": "https://unpkg.com/three@0.122.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.122.0/examples/jsm/"
+            }
+        }
+        </script>
     </head>
     <body>
+        <script type="module" src="../js/projects.js"></script>
 
-        <script type="module" src="https://md-block.verou.me/md-block.js"></script>
-
-        <header>
+        <header id="landing_page_header">
             <a class="logo" href="/"><img src="../assets/andrew.png" alt="logo" width="150px"></a>
             <nav>
                 <ul class="nav__links">
-                    <li><a href="../index.html#about">./<b>about</b></a></li>
-                    <li><a href="projects.html">./<b>projects</b></a></li>
-                    <li><a href="blog.html">./<b>blog</b></a></li>
+                    <li><a href="#about">./<b>about</b></a></li>
+                    <li><a href="pages/projects.html">./<b>projects</b></a></li>
+                    <li><a href="pages/blog.html">./<b>blog</b></a></li>
                 </ul>
             </nav>
+
             <p class="menu cta">Menu</p>
         </header>
-        <div id="mobile__menu" class="overlay">
-            <a class="close">&times;</a>
-            <div class="overlay__content">
-               <a href="about.html">About</a>
-               <a href="projects.html">Projects</a>
-               <a href="blog.html">Blog</a>
-            </div>
-        </div>
-        <script type="../text/javascript" src="mobile.js"></script>
-
-        <div id="markdown">
-            <md-block src="about.md">
-            </md-block>
-        </div>
-
     </body>
+
+
 </html>
