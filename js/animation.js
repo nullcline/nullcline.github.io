@@ -86,7 +86,7 @@ function render(a_0, b_0, f_0, g_0) {
     var b = b_0+Math.random()*7;
     var f = f_0+Math.random()*8;
     var g = g_0+Math.random();
-    var t = 0.0008;
+    var t = 0.0002;
 
     //todo: show the parameters live?
 
@@ -97,9 +97,9 @@ function render(a_0, b_0, f_0, g_0) {
     })
 
     geometry.verticesNeedUpdate = true;
-    group.rotation.x += 0.01;
-    group.rotation.y += 0.02;
-    group.rotation.z -= 0.01;
+    group.rotation.x += 0.001;
+    group.rotation.y += 0.002;
+    group.rotation.z -= 0.001;
 
     window.addEventListener( 'resize', function () {
         camera.aspect = window.innerWidth / window.innerHeight;
