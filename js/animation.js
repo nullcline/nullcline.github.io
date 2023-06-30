@@ -134,7 +134,7 @@ function timeskip(){
     var b = 5.508898472476083;
     var f = 12.693008234922399;
     var g = 2.8005228465422123;
-    var t = 0.005;
+    var t = 0.0057;
 
     for (var i=0;i<100;i++) {
         geometry.vertices.forEach(function(v){
