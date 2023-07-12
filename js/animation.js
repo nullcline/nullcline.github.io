@@ -70,7 +70,6 @@ function render(a_0, b_0, f_0, g_0) {
     renderer.render( scene, camera );
 
     raycaster.setFromCamera( mouse, camera );
-    console.log(mouse);
     // calculate objects intersecting the picking ray
     var intersects = raycaster.intersectObject( pc );
     for ( var i = 0; i < intersects.length; i++ ) {
