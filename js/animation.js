@@ -2,10 +2,11 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 let camera, controls, scene, renderer, pc, group, mouse, raycaster;
-// prettiest initial conditions
+
+// initial conditions hand-picked to look nice
 var a_0 = 1.062477352437103;
 var b_0 = 8.038291607940321;
-var f_0 = 14.507204661264549;
+var f_0 = 15.4135763998;
 var g_0 = 1.8347793740599485;
 
 init();
@@ -69,6 +70,7 @@ function render(a_0, b_0, f_0, g_0) {
     controls.update();
     renderer.render( scene, camera );
 
+    // trying to add interactivity
     raycaster.setFromCamera( mouse, camera );
     // calculate objects intersecting the picking ray
     var intersects = raycaster.intersectObject( pc );
@@ -83,16 +85,14 @@ function render(a_0, b_0, f_0, g_0) {
     var geometry = pc.geometry;
     var a = a_0+Math.random()*6;
     var b = b_0+Math.random()*7;
-    var f = f_0+Math.random()*8;
-    var g = g_0+Math.random();
-    var t = 0.0002;
-
-    //todo: show the parameters live?
+    var x_drift = (f_0+Math.random()*8)*a;
+    var y_drift = g_0+Math.random();
+    var dt = 0.0002;
 
     geometry.vertices.forEach(function(v){
-        v.x = v.x - t*a*v.x +t*v.y*v.y -t*v.z*v.z + t*a*f;
-        v.y = v.y - t*v.y + t*v.x*v.y - t*b*v.x*v.z + t*g;
-        v.z = v.z - t*v.z + t*b*v.x*v.y + t*v.x*v.z;
+        v.x = v.x + dt*(-a*v.x + v.y*v.y   - v.z*v.z   + x_drift);
+        v.y = v.y + dt*(-v.y   +  v.x*v.y  - b*v.x*v.z + y_drift);
+        v.z = v.z + dt*(-v.z   + b*v.x*v.y + v.x*v.z);
     })
 
     geometry.verticesNeedUpdate = true;
@@ -107,40 +107,40 @@ function render(a_0, b_0, f_0, g_0) {
     }, false );
 };
 
-function lorenz(a, b, f, g){
-
+// initialize the lorenz attractor
+function lorenz(a, b, x_drift, y_drift){
     var arrayCurve=[];
     var x = 0.01;
     var y = 0.01;
     var z = 0.01;
-    var t = 0.001;
+    var dt = 0.001;
 
     for (var i=0;i<100000;i++){
 
-        x = x - t*a*x +t*y*y -t*z*z + t*a*f;
-        y = y - t*y + t*x*y - t*b*x*z + t*g;
-        z = z - t*z + t*b*x*y + t*x*z;
+        x = x - dt*(a*x + y*y   - z*z   + x_drift);
+        y = y - dt*(y   + x*y   - b*x*z + y_drift);
+        z = z - dt*(z   + b*x*y + x*z);
         arrayCurve.push(new THREE.Vector3(x, y, z).multiplyScalar(1));
     }
     return arrayCurve;
 }
 
-// progress through the animation a bit to avoid ugly lines
+// progress through the animation a bit to get to the good stuff
 function timeskip(){
-
     var geometry = pc.geometry;
-    var a = 3.664669162451547;
-    var b = 5.508898472476083;
-    var f = 12.693008234922399;
-    var g = 2.8005228465422123;
-    var t = 0.0057;
+    var a       = 3.664669162451547;
+    var b       = 5.508898472476083;
+    var x_drift = 46.515675857312345;
+    var y_drift = 2.8005228465422123;
+    var dt      = 0.0057;
 
     for (var i=0;i<100;i++) {
         geometry.vertices.forEach(function(v){
-            v.x = v.x - t*a*v.x +t*v.y*v.y -t*v.z*v.z + t*a*f;
-            v.y = v.y - t*v.y + t*v.x*v.y - t*b*v.x*v.z + t*g;
-            v.z = v.z - t*v.z + t*b*v.x*v.y + t*v.x*v.z;
+            v.x = v.x + dt*(-a*v.x + v.y*v.y   - v.z*v.z   + x_drift);
+            v.y = v.y + dt*(-v.y   +  v.x*v.y  - b*v.x*v.z + y_drift);
+            v.z = v.z + dt*(-v.z   + b*v.x*v.y + v.x*v.z);
         })
+
 
         geometry.verticesNeedUpdate = true;
         group.rotation.x += 0.01;
